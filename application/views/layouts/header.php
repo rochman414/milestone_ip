@@ -8,15 +8,22 @@
     <link href="<?= base_url('assets/template') ?>/lib/Ionicons/css/ionicons.css" rel="stylesheet">
     <link href="<?= base_url('assets/template') ?>/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
     <link href="<?= base_url('assets/template') ?>/lib/jquery-switchbutton/jquery.switchButton.css" rel="stylesheet">
+    <link href="<?= base_url('assets/template') ?>/lib/datatables/jquery.dataTables.css" rel="stylesheet">
+    <link href="<?= base_url('assets/template') ?>/lib/lada_button/lada.css" rel="stylesheet">
+    <link href="<?= base_url('assets/template') ?>/lib/iziToast-master/dist/css/iziToast.min.css" rel="stylesheet">
 
     <!-- Bracket CSS -->
     <link rel="stylesheet" href="<?= base_url('assets/template') ?>/css/bracket.css">
+    <script src="<?= base_url('assets/template') ?>/lib/jquery/jquery.js"></script>
+    <script src="<?= base_url('assets/template') ?>/lib/datatables/jquery.dataTables.js"></script>
     <?php
         $segment_1 = $this->uri->segment(1);
         $segment_2 = $this->uri->segment(2);
+        if(!isset($this->session->userdata['userdata'])){
+          header('location:'.base_url('login'));
+        }
     ?>
   </head>
-
   <body>
     <!-- ########## START: LEFT PANEL ########## -->
     <div class="br-logo">
@@ -81,14 +88,14 @@
         <nav class="nav">
           <div class="dropdown">
             <a href="" class="nav-link nav-link-profile" data-toggle="dropdown">
-              <span class="logged-name hidden-md-down">Katherine</span>
+              <span class="logged-name hidden-md-down"><?= ucfirst($this->session->userdata['userdata']['username']); ?></span>
               <img src="http://via.placeholder.com/64x64" class="wd-32 rounded-circle" alt="">
               <span class="square-10 bg-success"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-header wd-200">
               <ul class="list-unstyled user-profile-nav">
                 <li><a href=""><i class="icon ion-ios-person"></i> Edit Profile</a></li>
-                <li><a href=""><i class="icon ion-power"></i> Sign Out</a></li>
+                <li><a href="<?= base_url('login/logout') ?>"><i class="icon ion-power"></i> Sign Out</a></li>
               </ul>
             </div><!-- dropdown-menu -->
           </div><!-- dropdown -->
