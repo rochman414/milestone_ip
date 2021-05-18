@@ -1,25 +1,30 @@
+<?php 
+    if($this->session->userdata['userdata']['role_id'] == 2 ){
+        header('location:'.base_url('dashboard'));
+    }
+?>
 <div class="col-md-12 pd-t-10 pd-l-30 pd-r-30 pd-b-10">
     <div class="row">
-        <div class="col-md-4">
-        </div>
-        <div class="col-md-4">
-        </div>
-        <div class="col-md-4 pd-r-30 pd-l-30">
+        <div class="col-md-4 pd-r-40 pd-l-40">
             <button type="button" class="btn btn-primary btn-block ladda-button btn-progress btn-tambah" style="cursor: pointer;" data-style="zoom-in" data-toggle="modal" data-target="#modaldemo3"><i class="fa fa-plus-circle"></i> Tambah User</button>
+        </div>
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
         </div>
     </div>
 </div>
 
 <div class="col-md-12 ">
-    <div class="table-wrapper pd-t-20 pd-l-30 pd-r-30 pd-b-30">
-        <table id="data" class="table-striped table-bordered dt-responsive display compact" style="width: 100%;">
+    <div class="table-wrapper pd-t-10 pd-l-30 pd-r-30 pd-b-30">
+        <table id="data" class="table-striped table-bordered dt-responsive display nowrap compact" style="width: 100%;">
             <thead>
             <tr>
                 <th class="wd-5p tx-center tx-dark">No</th>
                 <th class="tx-center tx-dark">Nama</th>
                 <th class="tx-center tx-dark">Username</th>
                 <th class="tx-center tx-dark">Tipe Akun</th>
-                <th class="tx-center tx-dark">Edit</th>
+                <th class="tx-center tx-dark">Aksi</th>
             </tr>
             </thead>
             <tbody>
@@ -39,11 +44,10 @@
         </div>
         <form action="" id="form-user">
             <input type="hidden" name="id" id="id">
-            <input type="hidden" name="role_id" id="role_id" value="1">
             <div class="modal-body pd-20">
                 <div class="form-group">
                     <div class="row">
-                        <label class="col-sm-3 form-control-label">Name: <span class="tx-danger">*</span></label>
+                        <label class="col-sm-3 form-control-label">Nama: <span class="tx-danger">*</span></label>
                         <div class="col-sm-9 mg-t-10 mg-sm-t-0">
                         <input type="text" class="form-control" name="name" placeholder="Enter Name">
                         </div>
@@ -56,6 +60,23 @@
                         <input type="text" class="form-control" name="username" placeholder="Enter Username">
                         </div>
                     </div><!-- row -->
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-sm-3 form-control-label">Tipe User: <span class="tx-danger">*</span></label>
+                        <div class="col-sm-9 mg-t-10 mg-sm-t-0">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <input type="radio" name="role_id" value="1" id="role_id_1" /> 
+                                    <label for="role_id_1">Administrator</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="radio" name="role_id" value="2" id="role_id_2"/>
+                                    <label for="role_id_2">Guest</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <div class="row">
@@ -78,8 +99,8 @@
                 <h3 class=" lh-3 tx-white">Why We Use Electoral College, Not Popular Vote</h3>
             </div><!-- modal-body -->
             <div class="modal-footer">
-                <button type="button" id="btn-simpan" class="btn btn-primary tx-size-xs ladda-button btn-progress">Save changes</button>
-                <button type="button" class="btn btn-secondary tx-size-xs" id="close1" data-dismiss="modal">Close</button>
+                <button type="button" id="btn-simpan" class="btn btn-primary tx-size-xs ladda-button btn-progress">Simpan</button>
+                <button type="button" class="btn btn-secondary tx-size-xs" id="close1" data-dismiss="modal">Tutup</button>
             </div>
         </form>
         </div>
@@ -95,13 +116,14 @@
             "scrollCollapse":false,
             "paging":true,
             "info": true,
+            "lengthChange": false,
             "order":[],
             
             "ajax": {
             "url": "<?= $data; ?>",
             "type": "POST",
             "data": function(data) {
-                console.log(data)
+
             }
             },
             "fnInitComplete": function() {
@@ -124,6 +146,8 @@
                 "render": function (data,type,row) { 
                 if(row.role_id == 1){
                     return `<div class="badge badge-info">ADMINISTRATOR</div>`;
+                } else {
+                    return `<div class="badge badge-success">Guest</div>`
                 }
                 }
             },
@@ -147,18 +171,18 @@
                 "fixedColumns":true,
                 "render": function (data,type,row) { 
                     if(row.id == userId){
-                        return `<button type="button" data-id="`+row.id+`" class="btn btn-sm btn-info btn-edit disabled" style="cursor:not-allowed;">
-                                    Edit
+                        return `<button type="button" data-id="`+row.id+`" class="btn btn-sm btn-info btn-edit " disabled style="cursor:not-allowed;">
+                                    Ubah
                                     </button> |
-                                    <button type="button" data-id="`+row.id+`" class="btn btn-sm btn-danger btn-delete disabled" style="cursor:not-allowed;">
-                                    Delete
+                                    <button type="button" data-id="`+row.id+`" class="btn btn-sm btn-danger btn-delete " disabled style="cursor:not-allowed;">
+                                    Hapus
                                     </button>`;
                     } else {
                         return `<button type="button" data-id="`+row.id+`" class="btn btn-sm btn-info btn-edit">
-                                    Edit
+                                    Ubah
                                     </button> |
                                     <button type="button" data-id="`+row.id+`" class="btn btn-sm btn-danger btn-delete">
-                                    Delete
+                                    Hapus
                                     </button>`;
                     }
                 }
@@ -166,16 +190,18 @@
             ],
         });
     });
+
     $('#btn-simpan').on('click.ev',function (e) {  
         e.preventDefault();
         var id = $('input[name="id"]').val();
-        var role_id = $('input[name="role_id"]').val();
+        var role_id = $('input[name="role_id"]:checked').val();
         var name = $('input[name="name"]').val();
         var username = $('input[name="username"]').val();
         var password = $('input[name="password"]').val();
         var password1 = $('input[name="password1"]').val();
 
-        if(name == "" || username == "" || password == "" || password1 == ""){
+        
+        if(name == "" || username == "" || password == "" || password1 == "" || role_id == ""){
             iziToast.warning({
                 tittle: "Peringatan!",
                 message: "Semua filed harus di isi.",
@@ -198,8 +224,8 @@
     function reset(form) {  
         $(form).trigger('reset');
         $(form).find('input[name="id"]').val('');
-        $(form).find('input[name="role_id"]').val('');
         $(form).find('input[name="name"]').val('');
+        $(form).find("input[type=radio][name=role_id]").prop('checked', false);
         $(form).find('input[name="username"]').val('');
         $(form).find('input[name="password"]').val('');
         $(form).find('input[name="password1"]').val('');
@@ -239,6 +265,11 @@
                 form.find('input[name="id"]').val(data.id);
                 form.find('input[name="name"]').val(data.name);
                 form.find('input[name="username"]').val(data.username);
+                if(data.role_id == 1){
+                    $("#role_id_1").prop("checked", true);
+                } else {
+                    $("#role_id_2").prop("checked", true);
+                }
                 
             }
         });
@@ -256,7 +287,7 @@
             id: 'question',
             zindex: 999,
             title: 'Perhatian!',
-            message: 'Apakah yakin ingin menghapus data ini ?',
+            message: 'Apakah anda yakin ingin menghapus data ini ?',
             position: 'center',
             buttons: [
                 ['<button><b>YES</b></button>', function (instance, toast) {

@@ -17,6 +17,7 @@ class Users extends CI_Controller {
 		$data['save'] = base_url('users/save');
 		$data['edit'] = base_url('users/edit');
 		$data['delete'] = base_url('users/delete');
+		$data['select'] = base_url('users/select');
 		$this->load->view('layouts/wrapper',$data);
 	}
 
@@ -60,31 +61,50 @@ class Users extends CI_Controller {
 		$savedata['password'] = password_hash($this->input->post('password',true),PASSWORD_DEFAULT);
 		$savedata['role_id'] = $this->input->post('role_id',true);
 		$id = $this->input->post('id',true);
+		$where['username'] = $savedata['username'];
+		$check_username = $this->Users_model->get($where);
 
 		$this->db->trans_begin();
-        if($id) { 
-            // edit
-			$this->Users_model->update($savedata, array('id' => $id));
-			$message = "User success to edited!";
-        } else { 
-            //create
-            $this->Users_model->insert($savedata);
-			$message = "User success to save!";
-        }
-        
-        if ($this->db->trans_status() === FALSE){
-            $this->db->trans_rollback();
-            $msg = array(
-                'type' => 'error',
-                'msg' => 'User not saved!',
-            );
-        }else {
-            $this->db->trans_commit();
-            $msg = array(
-                'type' => 'success',
-                'msg' => $message,
-            );
-        }
+		if($id) { 
+			// edit
+			if($check_username->id == $id){
+				$this->Users_model->update($savedata, array('id' => $id));
+				$message = array(
+					'type' => 'success',
+					'msg' => "User Berhasil di ubah!",
+				);
+			} else if (isset($check_username)){
+				$message =  array(
+					'type' => 'error',
+					'msg' => 'Username sudah ada!',
+				);
+			}
+		} else { 
+			//create
+			if(isset($check_username)){
+				$message =  array(
+					'type' => 'error',
+					'msg' => 'Username sudah ada!',
+				);
+			} else {
+				$this->Users_model->insert($savedata);
+				$message = array(
+					'type' => 'success',
+					'msg' => "User Berhasil di simpan!",
+				);
+			}
+		}
+		
+		if ($this->db->trans_status() === FALSE){
+			$this->db->trans_rollback();
+			$msg = array(
+				'type' => 'error',
+				'msg' => 'User gagal di simpan!',
+			);
+		}else {
+			$this->db->trans_commit();
+			$msg = $message;
+		}
 		echo json_encode($msg);
 	}
 
@@ -106,15 +126,16 @@ class Users extends CI_Controller {
             $this->db->trans_rollback();
             $msg = array(
                 'type' => 'error',
-                'msg' => 'Data Not Deleted!.',
+                'msg' => 'User Gagal di hapus!.',
             );
         }else{
             $this->db->trans_commit();
             $msg = array(
                 'type' => 'success',
-                'msg' => 'Data Success Deleted!.',
+                'msg' => 'User Berhasil di hapus!.',
             );
         }
         echo json_encode($msg);
 	}
+
 }

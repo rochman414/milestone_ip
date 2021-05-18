@@ -11,10 +11,15 @@
     <link href="<?= base_url('assets/template') ?>/lib/datatables/jquery.dataTables.css" rel="stylesheet">
     <link href="<?= base_url('assets/template') ?>/lib/lada_button/lada.css" rel="stylesheet">
     <link href="<?= base_url('assets/template') ?>/lib/iziToast-master/dist/css/iziToast.min.css" rel="stylesheet">
-
+    
+    
     <!-- Bracket CSS -->
     <link rel="stylesheet" href="<?= base_url('assets/template') ?>/css/bracket.css">
     <script src="<?= base_url('assets/template') ?>/lib/jquery/jquery.js"></script>
+    <script src="<?= base_url('assets/template') ?>/lib/popper.js/popper.js"></script>
+    <script src="<?= base_url('assets/template') ?>/lib/bootstrap/bootstrap.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="<?= base_url('assets/template') ?>/lib/datatables/jquery.dataTables.js"></script>
     <?php
         $segment_1 = $this->uri->segment(1);
@@ -23,6 +28,11 @@
           header('location:'.base_url('login'));
         }
     ?>
+    <style>
+      .dataTables_scrollHeadInner, .table{
+        width:100%!important
+      };
+    </style>
   </head>
   <body>
     <!-- ########## START: LEFT PANEL ########## -->
@@ -56,6 +66,7 @@
             <span class="menu-item-label">Status Milestone</span>
           </div><!-- menu-item -->
         </a><!-- br-menu-link -->
+        <?php if($this->session->userdata['userdata']['role_id'] == 1 ) { ?>
         <label class="sidebar-label pd-x-15 mg-t-20 tx-info op-9">ADMINISTRATOR</label>
         <a href="#" class="br-menu-link <?php if($segment_1 == 'c_master') echo 'active show-sub' ?>">
           <div class="br-menu-item">
@@ -74,6 +85,7 @@
             <span class="menu-item-label">Users</span>
           </div><!-- menu-item -->
         </a><!-- br-menu-link -->
+        <?php } ?>
       </div><!-- br-sideleft-menu -->
     </div><!-- br-sideleft -->
     <!-- ########## END: LEFT PANEL ########## -->
