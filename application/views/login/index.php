@@ -18,20 +18,17 @@
   </head>
 
   <body>
+
     <form method="POST" id="login">
       <div class="d-flex align-items-center justify-content-center bg-br-primary ht-100v">
-
         <div class="login-wrapper wd-400 wd-xs-400 pd-30 pd-xs-40 bg-white rounded shadow-base">
           <div class="signin-logo tx-center tx-28 tx-bold tx-inverse"><span class="tx-normal">[</span> Milestone Imani Prima <span class="tx-normal">]</span></div>
           <div class="tx-center mg-b-50">Imani Prima </div>
-
           <div class="form-group">
             <input type="text" class="form-control" name="username" placeholder="Enter your username" required>
-
           </div><!-- form-group -->
           <div class="form-group">
             <input type="password" class="form-control mg-b-20" name="password" placeholder="Enter your password" required>
-            <a href="" class="tx-info tx-12 d-block mg-t-10 mg-b-20">Forgot password?</a>
           </div><!-- form-group -->
           <button type="button" id="do_login" style="cursor: pointer;" class="btn btn-info btn-block btn-progress" data-style="zoom-in">Sign In</button>
           <div class="mg-t-60 tx-center"></div>
@@ -54,7 +51,7 @@
             dataType: 'json',
             cache: false
         });
-        $('#do_login').on('click.ev',function (e) { 
+        $('#do_login').on('click.ev keypress',function (e) { 
           e.preventDefault();
           $('#do_login').addClass('ladda-button')
           var user = $('input[name="username"]').val();

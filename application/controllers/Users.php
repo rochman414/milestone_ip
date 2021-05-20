@@ -71,12 +71,12 @@ class Users extends CI_Controller {
 				$this->Users_model->update($savedata, array('id' => $id));
 				$message = array(
 					'type' => 'success',
-					'msg' => "User Berhasil di ubah!",
+					'msg' => "Username ".$savedata['username']." Berhasil di ubah!",
 				);
 			} else if (isset($check_username)){
 				$message =  array(
 					'type' => 'error',
-					'msg' => 'Username sudah ada!',
+					'msg' => 'Username '.$savedata['username'].' sudah ada!',
 				);
 			}
 		} else { 
@@ -84,13 +84,13 @@ class Users extends CI_Controller {
 			if(isset($check_username)){
 				$message =  array(
 					'type' => 'error',
-					'msg' => 'Username sudah ada!',
+					'msg' => 'Username '.$savedata['username'].' sudah ada!',
 				);
 			} else {
 				$this->Users_model->insert($savedata);
 				$message = array(
 					'type' => 'success',
-					'msg' => "User Berhasil di simpan!",
+					'msg' => "Username ".$savedata['username']." Berhasil di simpan!",
 				);
 			}
 		}
@@ -99,7 +99,7 @@ class Users extends CI_Controller {
 			$this->db->trans_rollback();
 			$msg = array(
 				'type' => 'error',
-				'msg' => 'User gagal di simpan!',
+				'msg' => 'Username '.$savedata['username'].' gagal di simpan!',
 			);
 		}else {
 			$this->db->trans_commit();
@@ -119,6 +119,7 @@ class Users extends CI_Controller {
 	public function delete()
 	{
 		$where['id'] = $this->input->get('id');
+		$name = $this->Users_model->get($where);
 		$this->db->trans_begin();
 		$this->Users_model->delete($where);
 
@@ -126,13 +127,13 @@ class Users extends CI_Controller {
             $this->db->trans_rollback();
             $msg = array(
                 'type' => 'error',
-                'msg' => 'User Gagal di hapus!.',
+                'msg' => 'Username '.$name->username.' Gagal di hapus!.',
             );
         }else{
             $this->db->trans_commit();
             $msg = array(
                 'type' => 'success',
-                'msg' => 'User Berhasil di hapus!.',
+                'msg' => 'Username '.$name->username.' Berhasil di hapus!.',
             );
         }
         echo json_encode($msg);

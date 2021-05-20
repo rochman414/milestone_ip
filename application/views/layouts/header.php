@@ -11,6 +11,7 @@
     <link href="<?= base_url('assets/template') ?>/lib/datatables/jquery.dataTables.css" rel="stylesheet">
     <link href="<?= base_url('assets/template') ?>/lib/lada_button/lada.css" rel="stylesheet">
     <link href="<?= base_url('assets/template') ?>/lib/iziToast-master/dist/css/iziToast.min.css" rel="stylesheet">
+    <link href="<?= base_url('assets/template') ?>/lib/select2/css/select2.min.css" rel="stylesheet">
     
     
     <!-- Bracket CSS -->
@@ -18,9 +19,16 @@
     <script src="<?= base_url('assets/template') ?>/lib/jquery/jquery.js"></script>
     <script src="<?= base_url('assets/template') ?>/lib/popper.js/popper.js"></script>
     <script src="<?= base_url('assets/template') ?>/lib/bootstrap/bootstrap.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="<?= base_url('assets/template') ?>/lib/datatables/jquery.dataTables.js"></script>
+    <script src="<?= base_url('assets/template') ?>/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+    <script src="<?= base_url('assets/template') ?>/lib/moment/moment.js"></script>
+    <script src="<?= base_url('assets/template') ?>/lib/jquery-ui/jquery-ui.js"></script>
+    <script src="<?= base_url('assets/template') ?>/lib/jquery-switchbutton/jquery.switchButton.js"></script>
+    <script src="<?= base_url('assets/template') ?>/lib/peity/jquery.peity.js"></script>
+    <script src="<?= base_url('assets/template') ?>/lib/lada_button/lada.js"></script>
+    <script src="<?= base_url('assets/template') ?>/lib/iziToast-master/dist/js/iziToast.min.js"></script>
+    <script src="<?= base_url('assets/template') ?>/js/bracket.js"></script>
+    <script src="<?= base_url('assets/template') ?>/lib/select2/js/select2.min.js"></script>
     <?php
         $segment_1 = $this->uri->segment(1);
         $segment_2 = $this->uri->segment(2);
