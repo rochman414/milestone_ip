@@ -1,8 +1,3 @@
-<?php 
-    if($this->session->userdata['userdata']['role_id'] == 2 ){
-        header('location:'.base_url('dashboard'));
-    }
-?>
 <div class="col-md-12 ">
     <div class="table-wrapper pd-t-10 pd-l-30 pd-r-30 pd-b-30">
         <table id="data" class="table table-striped table-bordered display nowrap compact" style="margin: 0;" >
@@ -96,16 +91,32 @@
                 "fixedColumns":true,
                 "width":'20%',
                 "render": function (data,type,row) { 
-                    return `<button type="button" data-id="`+row.id+`" class="btn btn-sm btn-info btn-lihat">
+                    if(userId == 1){
+                        if(row.status == 1){
+                            return `<button type="button" data-id="`+row.id+`" class="btn btn-sm btn-info btn-lihat">
+                                            <i class="fa fa-eye"> 
+                                                Lihat
+                                            </i>
+                                        </button> |
+                                        <button type="button" data-id="`+row.id+`" class="btn btn-sm btn-success btn-tambah">
+                                            <i class="fa fa-plus"> 
+                                                Tambah Project
+                                            </i>
+                                        </button>`;
+                        } else {
+                            return `<button type="button" data-id="`+row.id+`" class="btn btn-sm btn-info btn-lihat">
                                     <i class="fa fa-eye"> 
                                         Lihat
                                     </i>
-                                </button> |
-                                <button type="button" data-id="`+row.id+`" class="btn btn-sm btn-success btn-tambah">
-                                    <i class="fa fa-plus"> 
-                                        Tambah Project
+                                </button>`
+                        }
+                    } else {
+                        return `<button type="button" data-id="`+row.id+`" class="btn btn-sm btn-info btn-lihat">
+                                    <i class="fa fa-eye"> 
+                                        Lihat
                                     </i>
                                 </button>`;
+                    }
                 }
             }
             ],

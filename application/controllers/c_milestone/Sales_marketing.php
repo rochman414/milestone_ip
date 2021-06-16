@@ -327,6 +327,10 @@ class Sales_marketing extends CI_Controller {
 	public function cek_milestone_id()
 	{
 		$id = $this->input->post('id',true);
+		$id_detail = $this->input->post('id_detail',true);
+		if($id_detail){
+			$milestone['data_detail'] = $this->db->get_where('detail_sales_marketing',['id' => $id_detail])->row_array();
+		}
 		$milestone['data'] = $this->db->get_where('milestone_sales_marketing',['id' => $id])->row_array();
 		
 		echo json_encode($milestone);

@@ -1,7 +1,7 @@
 <?php 
     if(isset($this->session->userdata['userdata'])){
         if($this->session->userdata['userdata']['role_id'] == 2 ){
-            header('location:'.base_url('dashboard'));
+            header('location:'.base_url('c_milestone/sales_marketing'));
         }
     } else {
         header('location:'.base_url('login'));

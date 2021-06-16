@@ -1,10 +1,10 @@
 <div class="pd-t-30 pd-l-15 pd-r-15">
     <div class="collapse  db-2 bd-primary" id="collapseExample">
         <form action="" id="form-detail-milestone">
-            <input type="text" name="id_milestone" id="id_milestone">
-            <input type="text" name="id_detail_sales" id="id_detail_sales">
-            <input type="text" name="user_id" id="user_id" value="<?= $this->session->userdata['userdata']['id']; ?>">
-            <input type="text" name="week" id="week">
+            <input type="hidden" name="id_milestone" id="id_milestone">
+            <input type="hidden" name="id_detail_sales" id="id_detail_sales">
+            <input type="hidden" name="user_id" id="user_id" value="<?= $this->session->userdata['userdata']['id']; ?>">
+            <input type="hidden" name="week" id="week">
             <div class="card bd-3 db-primary">
                 <div class="card card-header"> 
                     <h5 class="tx-dark pala"></h5>
@@ -102,6 +102,7 @@
 </div><!-- table-wrapper -->
 
 <script>
+    let userId = "<?= $this->session->userdata['userdata']['role_id']; ?>";
     function cek_value(id,status,week){
         let cek;
         if(status == 1){
@@ -121,15 +122,40 @@
         }
         return cek;
     }
-    function cek_milestone(id,week) {  
+    function cek_milestone(id,week,detail) {  
         reset_form('#form-detail-milestone');
         let form = $('#form-detail-milestone');
+        console.log(detail)
         $.ajax({
             type: "POST",
             url: "<?= base_url('c_milestone/sales_marketing/cek_milestone_id') ?>",
-            data: {id:id},
+            data: {id:id,id_detail:detail},
             success: function (response) {
+                let dtd = response.data_detail;
                 let dt = response.data;
+                if(dtd != null){
+                    let status = dtd.status_id;
+                    form.find('input[name="id_detail_sales"]').val(dtd.id);
+                    form.find('textarea#ket_update').val(dtd.keterangan_update);
+                    form.find('textarea#kendala').val(dtd.kendala_pencapaian_milestone);
+                    switch(parseInt(status)){
+                        case 1:
+                            $("#status_id_1").prop("checked", true);
+                            break;
+                        case 2:
+                            $("#status_id_2").prop("checked", true);
+                            break;
+                        case 3:
+                            $("#status_id_3").prop("checked", true);
+                            break;
+                        case 4:
+                            $("#status_id_4").prop("checked", true);
+                            break;
+                        case 5:
+                            $("#status_id_5").prop("checked", true);
+                            break;
+                    }
+                }
                 form.find('input[name="id_milestone"]').val(dt.id);
                 form.find('input[name="week"]').val(week);
                 $('.week-label').append(week);
@@ -140,6 +166,7 @@
     function reset_form(form) {  
         $(form).trigger('reset');
         $(form).find('input[name="id_milestone"]').val();
+        $(form).find('input[name="id_detail_sales"]').val();
         $(form).find('input[name="week"]').val('');
         $(form).find('input[name="ket_update"]').val('');
         $(form).find('input[name="kendala"]').val('');
@@ -240,15 +267,15 @@
                     let dt = response.data;  
                     let tubuh = [];  
                     if(dt.ket_update != ''){
-                        tubuh = `<div class="tx-dark">Minggu Ke : `+dt.week+`</div>
-                                    <div class="tx-dark">Keterangan Update : `+dt.ket_update+`</div>
-                                    <div class="tx-dark">Status : `+dt.status_name+`</div>
-                                    <div class="tx-dark">Di Update Oleh : `+dt.name_user+`</div>`;   
+                        tubuh = `<div class="tx-black">Minggu Ke : `+dt.week+`</div>
+                                    <div class="tx-black">Keterangan Update : `+dt.ket_update+`</div>
+                                    <div class="tx-black">Status : `+dt.status_name+`</div>
+                                    <div class="tx-black">Di Update Oleh : `+dt.name_user+`</div>`;   
                     } else {
-                        tubuh = `<div class="tx-dark">Minggu Ke : `+dt.week+`</div>
-                                    <div class="tx-dark">Keterangan Kendala : `+dt.kendala+`</div>
-                                    <div class="tx-dark">Status : `+dt.status_name+`</div>
-                                    <div class="tx-dark">Di Update Oleh : `+dt.name_user+`</div>`;   
+                        tubuh = `<div class="tx-black">Minggu Ke : `+dt.week+`</div>
+                                    <div class="tx-black">Keterangan Kendala : `+dt.kendala+`</div>
+                                    <div class="tx-black">Status : `+dt.status_name+`</div>
+                                    <div class="tx-black">Di Update Oleh : `+dt.name_user+`</div>`;   
                     }
                     $($this).popover({
                                 container: 'body',
@@ -261,7 +288,7 @@
                     $($this).popover({
                                 container: 'body',
                                 html: true,
-                                content: 'Milestone belum ada perkembangan'
+                                content: 'Milestone belum ada perkembangan!'
                             });
                     $($this).popover('show');  
                 }
@@ -342,16 +369,32 @@
                 let dt = response.data;
                 let tubuh = [];
                 if(dt != null){
-                    if(dt.ket_update != ''){
-                        tubuh = `<div class="tx-dark">Minggu Ke : `+dt.week+`</div>
-                                    <div class="tx-dark">Keterangan Update : `+dt.ket_update+`</div>
-                                    <div class="tx-dark">Status : `+dt.status_name+`</div>
-                                    <div class="tx-dark">Di Update Oleh : `+dt.name_user+`</div>`;   
+                    if(userId == 1){
+                        if(dt.ket_update != ''){
+                            tubuh = `<div class="tx-black">Minggu Ke : `+dt.week+`</div>
+                                        <div class="tx-black">Keterangan Update : `+dt.ket_update+`</div>
+                                        <div class="tx-black">Status : `+dt.status_name+`</div>
+                                        <div class="tx-black">Di Update Oleh : `+dt.name_user+`</div>
+                                        <div><button style="cursor:pointer;" class="btn btn-sm btn-primary btn-ubah" data-id="`+id_milestone+'|'+week+'|'+dt.id+`">Ubah Milestone</button></div>`;   
+                        } else {
+                            tubuh = `<div class="tx-black">Minggu Ke : `+dt.week+`</div>
+                                        <div class="tx-black">Keterangan Kendala : `+dt.kendala+`</div>
+                                        <div class="tx-black">Status : `+dt.status_name+`</div>
+                                        <div class="tx-black">Di Update Oleh : `+dt.name_user+`</div>
+                                        <div><button style="cursor:pointer;" class="btn btn-sm btn-primary btn-ubah" data-id="`+id_milestone+'|'+week+'|'+dt.id+`">Ubah Milestone</button></div>`;   
+                        }
                     } else {
-                        tubuh = `<div class="tx-dark">Minggu Ke : `+dt.week+`</div>
-                                    <div class="tx-dark">Keterangan Kendala : `+dt.kendala+`</div>
-                                    <div class="tx-dark">Status : `+dt.status_name+`</div>
-                                    <div class="tx-dark">Di Update Oleh : `+dt.name_user+`</div>`;   
+                        if(dt.ket_update != ''){
+                            tubuh = `<div class="tx-black">Minggu Ke : `+dt.week+`</div>
+                                        <div class="tx-black">Keterangan Update : `+dt.ket_update+`</div>
+                                        <div class="tx-black">Status : `+dt.status_name+`</div>
+                                        <div class="tx-black">Di Update Oleh : `+dt.name_user+`</div>`;   
+                        } else {
+                            tubuh = `<div class="tx-black">Minggu Ke : `+dt.week+`</div>
+                                        <div class="tx-black">Keterangan Kendala : `+dt.kendala+`</div>
+                                        <div class="tx-black">Status : `+dt.status_name+`</div>
+                                        <div class="tx-black">Di Update Oleh : `+dt.name_user+`</div>`;   
+                        }
                     }
                     $($this).popover({
                                 container: 'body',
@@ -361,8 +404,17 @@
                             });
                     $($this).popover('show');  
                 } else {
-                    cek_milestone(id_milestone,week);
-                    $('#collapseExample').collapse('show');
+                    if(userId == 1){
+                        cek_milestone(id_milestone,week);
+                        $('#collapseExample').collapse('show');
+                    } else {
+                        $($this).popover({
+                                container: 'body',
+                                html: true,
+                                content: 'Milestone belum ada perkembangan!'
+                        });
+                        $($this).popover('show'); 
+                    }
                 }
             }
         });
@@ -405,6 +457,25 @@
                 });
             }
         }
+    })
+    $(document).on('click.ev','.btn-ubah', function(e){
+        e.preventDefault();
+        let $this   = $(this);
+        let dataId  = $this.attr('data-id');
+        let all     = dataId.split('|');
+        let id_milestone    = all[0];
+        let week    = all[1];
+        let id_detail       = all[2];
+
+        cek_milestone(id_milestone,week,id_detail);
+        $('.tambah').each(function () {
+            //the 'is' for buttons that trigger popups
+            //the 'has' for icons within a button that triggers a popup
+            if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                $(this).popover('hide');
+            }
+        });
+        $('#collapseExample').collapse('show');
     })
     $('.btn-cancel').on('click.ev',function (e) {  
         e.preventDefault();
