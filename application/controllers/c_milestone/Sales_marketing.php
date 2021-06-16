@@ -219,6 +219,13 @@ class Sales_marketing extends CI_Controller {
 
 	public function show_detail()
 	{
+		$tahun = $this->db->get_where('tahun_milestone',['tahun' => date('Y')])->row_array();
+
+		if(!isset($tahun)){
+			$data = [ 'tahun' => date('Y')];
+			$this->db->insert('tahun_milestone',$data);
+		};
+
 		$id = $this->input->get('sales',true);
 		$where['id'] = $id;
 		$tl = $this->Code_tl_model->get($where);

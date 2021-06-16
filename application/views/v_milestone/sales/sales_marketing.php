@@ -17,7 +17,7 @@
     </div><!-- table-wrapper -->
 </div>
 <script>
-    var userId = '<?= $this->session->userdata['userdata']['id']; ?>';
+    var roleId = '<?= $this->session->userdata['userdata']['role_id']; ?>';
     $(document).ready(function () {
         let table = $("#data").DataTable({
             "scrollY": '50vh',
@@ -91,7 +91,7 @@
                 "fixedColumns":true,
                 "width":'20%',
                 "render": function (data,type,row) { 
-                    if(userId == 1){
+                    if(roleId == 1){
                         if(row.status == 1){
                             return `<button type="button" data-id="`+row.id+`" class="btn btn-sm btn-info btn-lihat">
                                             <i class="fa fa-eye"> 
