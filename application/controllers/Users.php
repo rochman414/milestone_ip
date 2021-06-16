@@ -120,22 +120,32 @@ class Users extends CI_Controller {
 	{
 		$where['id'] = $this->input->get('id');
 		$name = $this->Users_model->get($where);
-		$this->db->trans_begin();
-		$this->Users_model->delete($where);
-
-		if ($this->db->trans_status() === FALSE){
-            $this->db->trans_rollback();
-            $msg = array(
-                'type' => 'error',
-                'msg' => 'Username '.$name->username.' Gagal di hapus!.',
-            );
-        }else{
-            $this->db->trans_commit();
-            $msg = array(
-                'type' => 'success',
-                'msg' => 'Username '.$name->username.' Berhasil di hapus!.',
-            );
-        }
+		$cek1 = $this->db->get_where('detail_sales_marketing',['users_id' => $name->id])->row_array();
+		$cek2 = $this->db->get_where('detail_development',['users_id' => $name->id])->row_array();
+		$cek3 = $this->db->get_where('detail_oprational',['users_id' => $name->id])->row_array();
+		if($cek1 != null || $cek2 != null || $cek3 != null){
+			$msg = array(
+				'type' 	=> 'error',
+				'msg' 	=> 'User ini masih memiliki data tidak bisa di hapus!.',
+			);
+		} else {
+			$this->db->trans_begin();
+			$this->Users_model->delete($where);
+	
+			if ($this->db->trans_status() === FALSE){
+				$this->db->trans_rollback();
+				$msg = array(
+					'type' => 'error',
+					'msg' => 'Username '.$name->username.' Gagal di hapus!.',
+				);
+			}else{
+				$this->db->trans_commit();
+				$msg = array(
+					'type' => 'success',
+					'msg' => 'Username '.$name->username.' Berhasil di hapus!.',
+				);
+			}
+		}
         echo json_encode($msg);
 	}
 

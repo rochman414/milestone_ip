@@ -146,22 +146,40 @@ class Name_code extends CI_Controller {
 	{
 		$where['id'] = $this->input->get('id', true);
 		$Tl = $this->Code_tl_model->get($where);
-		$this->db->trans_begin();
-		$this->Code_tl_model->delete($where);
-
-		if ($this->db->trans_status() === FALSE){
-            $this->db->trans_rollback();
-            $msg = array(
-                'type' => 'error',
-                'msg' => 'Team Leader '.$Tl->name.' Gagal di hapus!.',
-            );
-        }else{
-            $this->db->trans_commit();
-            $msg = array(
-                'type' => 'success',
-                'msg' => 'Team Leader '.$Tl->name.' Berhasil di hapus!.',
-            );
-        }
+		switch($Tl->division_id){
+			case 1:
+				$cek = $this->db->get_where('milestone_sales_marketing',['code_tl_id' => $where['id']])->row_array();
+				break;
+			case 2:
+				$cek = $this->db->get_where('milestone_development',['code_tl_id' => $where['id']])->row_array();
+				break;
+			case 3:
+				$cek = $this->db->get_where('milestone_oprational',['code_tl_id' => $where['id']])->row_array();
+				break;
+		}
+		if($cek){
+			$msg = array(
+				'type' 	=> 'error',
+				'msg' 	=> 'Team Leader masih memiliki data tidak bisa di hapus!.',
+			);
+		} else {
+			$this->db->trans_begin();
+			$this->Code_tl_model->delete($where);
+	
+			if ($this->db->trans_status() === FALSE){
+				$this->db->trans_rollback();
+				$msg = array(
+					'type' => 'error',
+					'msg' => 'Team Leader '.$Tl->name.' Gagal di hapus!.',
+				);
+			}else{
+				$this->db->trans_commit();
+				$msg = array(
+					'type' => 'success',
+					'msg' => 'Team Leader '.$Tl->name.' Berhasil di hapus!.',
+				);
+			}
+		}
         echo json_encode($msg);
 	}
 

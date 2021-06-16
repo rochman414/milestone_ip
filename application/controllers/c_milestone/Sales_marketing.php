@@ -190,22 +190,30 @@ class Sales_marketing extends CI_Controller {
 	public function delete()
 	{
 		$where['id'] = $this->input->get('id');
-		$this->db->trans_begin();
-		$this->Milestone_sales_model->delete($where);
-
-		if ($this->db->trans_status() === FALSE){
-            $this->db->trans_rollback();
-            $msg = array(
-                'type' 	=> 'error',
-                'msg' 	=> 'Milestone Gagal di hapus!.',
-            );
-        }else{
-            $this->db->trans_commit();
-            $msg = array(
-                'type' 	=> 'success',
-                'msg' 	=> 'Milestone Berhasil di hapus!.',
-            );
-        }
+		$cek = $this->db->get_where('detail_sales_marketing',['milestone_id' => $where['id']])->row_array();
+		if($cek){
+			$msg = array(
+				'type' 	=> 'error',
+				'msg' 	=> 'Milestone masih memiliki data tidak bisa di hapus!.',
+			);
+		} else {
+			$this->db->trans_begin();
+			$this->Milestone_sales_model->delete($where);
+	
+			if ($this->db->trans_status() === FALSE){
+			    $this->db->trans_rollback();
+			    $msg = array(
+			        'type' 	=> 'error',
+			        'msg' 	=> 'Milestone Gagal di hapus!.',
+			    );
+			}else{
+			    $this->db->trans_commit();
+			    $msg = array(
+			        'type' 	=> 'success',
+			        'msg' 	=> 'Milestone Berhasil di hapus!.',
+			    );
+			}
+		}
         echo json_encode($msg);
 	}
 
