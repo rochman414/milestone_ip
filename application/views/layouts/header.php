@@ -36,9 +36,12 @@
           header('location:'.base_url('login'));
         }
     ?>
-    <style>
+    <style type="text/css">
       .dataTables_scrollHeadInner, .table{
         width:100%!important
+      };
+      .myUniqueTable th {
+          text-align: center !important;
       };
     </style>
   </head>
@@ -68,12 +71,13 @@
           <li class="nav-item"><a href="<?= base_url('c_milestone/development') ?>" class="nav-link <?php if($segment_2 == 'development') echo 'active show-sub' ?>">Development</a></li>
           <li class="nav-item"><a href="<?= base_url('c_milestone/operational') ?>" class="nav-link <?php if($segment_2 == 'operational') echo 'active show-sub' ?>">Operational</a></li>
         </ul>
-        <a href="<?= base_url('status') ?>" class="br-menu-link <?php if($segment_1 == 'status') echo 'active show-sub' ?>">
+        <!-- <a href="<?= base_url('status') ?>" class="br-menu-link <?php if($segment_1 == 'status') echo 'active show-sub' ?>">
           <div class="br-menu-item">
             <i class="menu-item-icon icon ion-eye tx-22"></i>
             <span class="menu-item-label">Status Milestone</span>
-          </div><!-- menu-item -->
-        </a><!-- br-menu-link -->
+          </div>
+        </a> -->
+        <!-- br-menu-link -->
         <?php if($this->session->userdata['userdata']['role_id'] == 1 ) { ?>
         <label class="sidebar-label pd-x-15 mg-t-20 tx-info op-9">ADMINISTRATOR</label>
         <a href="#" class="br-menu-link <?php if($segment_1 == 'c_master') echo 'active show-sub' ?>">
@@ -85,7 +89,7 @@
         </a><!-- br-menu-link -->
         <ul class="br-menu-sub nav flex-column">
           <li class="nav-item"><a href="<?= base_url('c_master/name_code') ?>" class="nav-link <?php if($segment_2 == 'name_code') echo 'active show-sub' ?>">Name Code TL</a></li>
-          <li class="nav-item"><a href="<?= base_url('c_master/project') ?>" class="nav-link <?php if($segment_2 == 'project') echo 'active show-sub' ?>">Project</a></li>
+          <!-- <li class="nav-item"><a href="<?= base_url('c_master/project') ?>" class="nav-link <?php if($segment_2 == 'project') echo 'active show-sub' ?>">Project</a></li> -->
         </ul>
         <a href="<?= base_url('users') ?>" class="br-menu-link <?php if($segment_1 == 'users') echo 'active show-sub' ?>">
           <div class="br-menu-item">

@@ -16,16 +16,16 @@
 </div>
 <div class="col-md-12 ">
     <div class="table-wrapper pd-t-10 pd-l-30 pd-r-30 pd-b-30">
-        <table id="data" class="table table-striped table-bordered dt-responsive display nowrap compact" style="margin: 0;" >
+        <table id="data" class="table table-striped table-bordered display nowrap compact" style="margin: 0; width:100%;    " >
             <thead>
-            <tr>
-                <th class="tx-center tx-dark">No</th>
-                <th class="tx-center tx-dark" style="width: 10%;">Code TL</th>
-                <th class="tx-center tx-dark">Nama</th>
-                <th class="tx-center tx-dark" style="width: 15%;">Divisi</th>
-                <th class="tx-center tx-dark" style="width: 15%;">Status</th>
-                <th class="tx-center tx-dark" style="width: 15%;">Aksi</th>
-            </tr>
+                <tr>
+                    <th class="tx-center tx-dark">No</th>
+                    <th class="tx-center tx-dark" style="width: 10%;">Code TL</th>
+                    <th class="tx-center tx-dark">Nama</th>
+                    <th class="tx-center tx-dark" style="width: 15%;">Divisi</th>
+                    <th class="tx-center tx-dark" style="width: 15%;">Status</th>
+                    <th class="tx-center tx-dark" style="width: 15%;">Aksi</th>
+                </tr>
             </thead>
             <tbody>
             </tbody>
