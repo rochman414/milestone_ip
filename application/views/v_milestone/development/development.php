@@ -59,7 +59,7 @@
                 "fixedColumns":true,
                 "width":"10%",
                 "render": function (data,type,row) { 
-                    return `<span class="lead"><span class="badge badge-pill badge-info">`+row.division_name+`</span></span>`;
+                    return `<span class="lead"><span class="badge badge-pill badge-success">`+row.division_name+`</span></span>`;
                 }
             },
             {
@@ -131,13 +131,13 @@
         let $this = $(this);
         let id = $this.attr('data-id');
         let link = '<?= $detail ?>';
-        window.location.replace(link+'?sales='+id);
+        window.location.replace(link+'?development='+id);
     })
     $(document).on('click.ev','.btn-lihat',function(e){
         e.preventDefault();
         let $this = $(this);
         let id = $this.attr('data-id');
         let link = '<?= $show ?>';
-        window.location.replace(link+'?sales='+id);
+        window.location.replace(link+'?development='+id);
     })
 </script>

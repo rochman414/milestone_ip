@@ -46,6 +46,7 @@ class Name_code extends CI_Controller {
 				$row['division_name'] = $ls['division_name'];
 				$row['division_id'] = $ls['division_id'];
 				$row['status'] = $ls['status'];
+				$row['departemen'] = $ls['departemen'];
 				$row['id'] = $ls['id'];
 				$temp_data[] = (object)$row;
 			}
@@ -65,6 +66,7 @@ class Name_code extends CI_Controller {
 		$savedata['name'] = ucfirst($this->input->post('name',true));
 		$savedata['division_id'] = $this->input->post('division_id',true);
 		$savedata['status'] = $this->input->post('status',true);
+		$savedata['departemen'] =ucfirst($this->input->post('departemen',true));
 
 		$where['code_tl'] = $savedata['code_tl'];
 		$checkTL = $this->Code_tl_model->get($where);

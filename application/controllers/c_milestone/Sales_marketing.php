@@ -46,6 +46,7 @@ class Sales_marketing extends CI_Controller {
 				$row['division_name'] = $ls['division_name'];
 				$row['division_id'] = $ls['division_id'];
 				$row['status'] = $ls['status'];
+				$row['departemen'] = $ls['departemen'];
 				$row['id'] = $ls['id'];
 				$temp_data[] = (object)$row;
 			}
@@ -71,7 +72,7 @@ class Sales_marketing extends CI_Controller {
 		$where['id'] = $id;
 		$tl = $this->Code_tl_model->get($where);
 		if($tl){
-			$data['tittle']	= 'Milestone Team '.$tl->code_tl.' '.$tl->name;
+			$data['tittle']	= 'Milestone Departemen '.$tl->departemen.' Team '.$tl->code_tl.' '.$tl->name;
 			$data['isi']	= "v_milestone/sales/add_sales";
 			$data['team']	= $tl;
 			$data['table']	= base_url('c_milestone/sales_marketing/table/');
@@ -230,7 +231,7 @@ class Sales_marketing extends CI_Controller {
 		$where['id'] = $id;
 		$tl = $this->Code_tl_model->get($where);
 		$data['team']	= $tl;
-		$data['tittle']	= "Detail Milestone Sales & Marketing team ".$tl->code_tl." ".$tl->name;
+		$data['tittle']	= 'Detail Milestone Departemen '.$tl->departemen.' Team '.$tl->code_tl.' '.$tl->name;
 		$data['isi']	= "v_milestone/sales/sales_show";
 		$data['tahun']	= base_url('c_milestone/sales_marketing/tahun');
 		$data['table']	= base_url('c_milestone/sales_marketing/table_show/');

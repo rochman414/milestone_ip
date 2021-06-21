@@ -22,6 +22,7 @@
                     <th class="tx-center tx-dark">No</th>
                     <th class="tx-center tx-dark" style="width: 10%;">Code TL</th>
                     <th class="tx-center tx-dark">Nama</th>
+                    <th class="tx-center tx-dark">Departemen</th>
                     <th class="tx-center tx-dark" style="width: 15%;">Divisi</th>
                     <th class="tx-center tx-dark" style="width: 15%;">Status</th>
                     <th class="tx-center tx-dark" style="width: 15%;">Aksi</th>
@@ -57,6 +58,14 @@
                         <label class="col-sm-3 form-control-label">Name TL : <span class="tx-danger">*</span></label>
                         <div class="col-sm-9 mg-t-10 mg-sm-t-0">
                         <input type="text" class="form-control" name="name" id="name" placeholder="Enter Name TL">
+                        </div>
+                    </div><!-- row -->
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-sm-3 form-control-label">Departemen : <span class="tx-danger">*</span></label>
+                        <div class="col-sm-9 mg-t-10 mg-sm-t-0">
+                        <input type="text" class="form-control" name="departemen" id="departemen" placeholder="Enter Departemen">
                         </div>
                     </div><!-- row -->
                 </div>
@@ -138,7 +147,10 @@
                 "data": "name"
             }, 
             {
-                "target": 3,
+                "data": "departemen"
+            }, 
+            {
+                "target": 4,
                 "fixedColumns":true,
                 "width":"15%",
                 "render": function (data,type,row) { 
@@ -154,7 +166,7 @@
                 }
             },
             {
-                "target": 4,
+                "target": 5,
                 "fixedColumns":true,
                 "width": "15%",
                 "render": function (data,type,row) { 
@@ -170,7 +182,7 @@
             
             "columnDefs": [
             {
-                "targets": [0, 5], 
+                "targets": [0, 6], 
                 "orderable": true, 
                 "searchable": false, 
                 "fixedColumns": true,
@@ -182,7 +194,7 @@
                 "width":20,
             },
             {
-                "targets": 5,
+                "targets": 6,
                 "fixedColumns":true,
                 "width":'15%',
                 "render": function (data,type,row) { 
@@ -229,10 +241,12 @@
         var id = $('input[name="id"]').val();
         var code = $('input[name="code"]').val();
         var name = $('input[name="name"]').val();
+        var departemen = $('input[name="departemen"]').val();
         var division_id = $('select[name="division_id"]').val();
         var status = $('input[name="status"]:checked').val();
 
-        if(code == "" || name == "" || division_id == "" || status == ""){
+        console.log(departemen)
+        if(code == "" || name == "" || division_id == "" || status == "" || departemen == ""){
             iziToast.warning({
                 tittle: "Gagal",
                 message: "Semua field harus di isi!",
@@ -242,7 +256,7 @@
             $.ajax({
                 type: "POST",
                 url: "<?= $save ?>",
-                data: {id: id, code: code, name:name, division_id : division_id, status: status},
+                data: {id: id, code: code, name:name, division_id : division_id, status: status, departemen: departemen},
                 success: function (response) {
                     showNotif(response.type, response.msg);
                     $('#data').DataTable().ajax.reload();
@@ -257,6 +271,7 @@
         $(form).find('input[name="code"]').val('');
         $(form).find("input[type=radio][name=status]").prop('checked', false);
         $(form).find('input[name="name"]').val('');
+        $(form).find('input[name="departemen"]').val('');
         $(form).find('select').empty().trigger('change');
     }
     $(document).on('click.ev','#close, #close1', function (e) {
@@ -281,6 +296,7 @@
                 form.find('input[name="id"]').val(dt.id);
                 form.find('input[name="code"]').val(dt.code_tl);
                 form.find('input[name="name"]').val(dt.name);
+                form.find('input[name="departemen"]').val(dt.departemen);
                 let opt_division = new Option(dt.division_name,dt.division_id,true,true);
                 form.find('select').append(opt_division).trigger('change');
                 if(dt.status == 1){
