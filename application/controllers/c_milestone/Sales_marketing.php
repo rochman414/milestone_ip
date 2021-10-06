@@ -373,11 +373,20 @@ class Sales_marketing extends CI_Controller {
 
 		} else { 
 			//create
-			$this->Detail_sales_marketing_model->insert($savedata);
-			$message = array(
-				'type' => 'success',
-				'msg' => "Detail Milestone Sales & Marketing Berhasil di tambah!",
-			);
+			$milestone = $this->db->get_where('detail_sales_marketing',['milestone_id' => $savedata['milestone_id'],'week' => $savedata['week']])->row_array();
+			if($milestone !== null ){
+				$message = array(
+					'type' => 'error',
+					'msg' => "Data sudah ada!"
+				);
+			} else {
+				$this->Detail_sales_marketing_model->insert($savedata);
+				$message = array(
+					'type' => 'success',
+					'msg' => "Detail Milestone Sales & Marketing Berhasil di tambah!",
+				);
+			}
+
 		}
 		
 		if ($this->db->trans_status() === FALSE){

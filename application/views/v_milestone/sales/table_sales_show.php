@@ -165,8 +165,8 @@
     }
     function reset_form(form) {  
         $(form).trigger('reset');
-        $(form).find('input[name="id_milestone"]').val();
-        $(form).find('input[name="id_detail_sales"]').val();
+        $(form).find('input[name="id_milestone"]').val('');
+        $(form).find('input[name="id_detail_sales"]').val('');
         $(form).find('input[name="week"]').val('');
         $(form).find('input[name="ket_update"]').val('');
         $(form).find('input[name="kendala"]').val('');
@@ -266,13 +266,14 @@
                 if(response.data != null){
                     let dt = response.data;  
                     let tubuh = [];  
-                    if(dt.ket_update != ''){
+                    if(dt.kendala == ''){
                         tubuh = `<div class="tx-black">Minggu Ke : `+dt.week+`</div>
                                     <div class="tx-black">Keterangan Update : `+dt.ket_update+`</div>
                                     <div class="tx-black">Status : `+dt.status_name+`</div>
                                     <div class="tx-black">Di Update Oleh : `+dt.name_user+`</div>`;   
                     } else {
                         tubuh = `<div class="tx-black">Minggu Ke : `+dt.week+`</div>
+                                    <div class="tx-black">Keterangan Update : `+dt.ket_update+`</div>
                                     <div class="tx-black">Keterangan Kendala : `+dt.kendala+`</div>
                                     <div class="tx-black">Status : `+dt.status_name+`</div>
                                     <div class="tx-black">Di Update Oleh : `+dt.name_user+`</div>`;   
@@ -370,7 +371,7 @@
                 let tubuh = [];
                 if(dt != null){
                     if(userId == 1){
-                        if(dt.ket_update != ''){
+                        if(dt.kendala == ''){
                             tubuh = `<div class="tx-black">Minggu Ke : `+dt.week+`</div>
                                         <div class="tx-black">Keterangan Update : `+dt.ket_update+`</div>
                                         <div class="tx-black">Status : `+dt.status_name+`</div>
@@ -378,19 +379,21 @@
                                         <div><button style="cursor:pointer;" class="btn btn-sm btn-primary btn-ubah" data-id="`+id_milestone+'|'+week+'|'+dt.id+`">Ubah Milestone</button></div>`;   
                         } else {
                             tubuh = `<div class="tx-black">Minggu Ke : `+dt.week+`</div>
+                                        <div class="tx-black">Keterangan Update : `+dt.ket_update+`</div>
                                         <div class="tx-black">Keterangan Kendala : `+dt.kendala+`</div>
                                         <div class="tx-black">Status : `+dt.status_name+`</div>
                                         <div class="tx-black">Di Update Oleh : `+dt.name_user+`</div>
                                         <div><button style="cursor:pointer;" class="btn btn-sm btn-primary btn-ubah" data-id="`+id_milestone+'|'+week+'|'+dt.id+`">Ubah Milestone</button></div>`;   
                         }
                     } else {
-                        if(dt.ket_update != ''){
+                        if(dt.kendala == ''){
                             tubuh = `<div class="tx-black">Minggu Ke : `+dt.week+`</div>
                                         <div class="tx-black">Keterangan Update : `+dt.ket_update+`</div>
                                         <div class="tx-black">Status : `+dt.status_name+`</div>
                                         <div class="tx-black">Di Update Oleh : `+dt.name_user+`</div>`;   
                         } else {
                             tubuh = `<div class="tx-black">Minggu Ke : `+dt.week+`</div>
+                                        <div class="tx-black">Keterangan Update : `+dt.ket_update+`</div>
                                         <div class="tx-black">Keterangan Kendala : `+dt.kendala+`</div>
                                         <div class="tx-black">Status : `+dt.status_name+`</div>
                                         <div class="tx-black">Di Update Oleh : `+dt.name_user+`</div>`;   
@@ -428,7 +431,7 @@
         let status_id   = $('input[name="status_id"]:checked').val();
         let ket_update  = $('textarea#ket_update').val();
         let kendala     = $('textarea#kendala').val();
-        console.log(status_id);
+        console.log(id_detail);
 
         if(status_id == null){
             iziToast.warning({
