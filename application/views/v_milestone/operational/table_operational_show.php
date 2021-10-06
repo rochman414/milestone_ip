@@ -282,13 +282,14 @@
                 if(response.data != null){
                     let dt = response.data;  
                     let tubuh = [];  
-                    if(dt.ket_update != ''){
+                    if(dt.kendala == ''){
                         tubuh = `<div class="tx-black">Minggu Ke : `+dt.week+`</div>
                                     <div class="tx-black">Keterangan Update : `+dt.ket_update+`</div>
                                     <div class="tx-black">Status : `+dt.status_name+`</div>
                                     <div class="tx-black">Di Update Oleh : `+dt.name_user+`</div>`;   
                     } else {
                         tubuh = `<div class="tx-black">Minggu Ke : `+dt.week+`</div>
+                                    <div class="tx-black">Keterangan Update : `+dt.ket_update+`</div>
                                     <div class="tx-black">Keterangan Kendala : `+dt.kendala+`</div>
                                     <div class="tx-black">Status : `+dt.status_name+`</div>
                                     <div class="tx-black">Di Update Oleh : `+dt.name_user+`</div>`;   
